@@ -47,10 +47,12 @@ public class ColorSensorClass {
         if (color_sensor.red() > 200) {
 
             jewel.setPosition(ServoPos);
+            motor3.setPower(10);
 
         } else {
 
             jewel.setPosition(0.0);
+            motor3.setPower(0.0);
 
         }
 

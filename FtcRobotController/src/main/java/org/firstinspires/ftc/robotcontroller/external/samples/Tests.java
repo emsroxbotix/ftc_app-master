@@ -12,11 +12,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class Tests extends OpMode {
 
     ColorSensorClass jewelTest = new ColorSensorClass();
+    TouchSensorClass touchTest = new TouchSensorClass();
 
     @Override
     public void init() {
 
         jewelTest.init(hardwareMap);
+        touchTest.init(hardwareMap);
 
 
     }
@@ -25,9 +27,13 @@ public class Tests extends OpMode {
     public void loop() {
 
         jewelTest.RedCheck(1.0);
+        touchTest.TouchCheck(1.0);
 
-        telemetry.addData("Num", jewelTest.color_sensor.alpha());
-        telemetry.addData("Red", jewelTest.color_sensor.red());
+        telemetry.addData("TouchVal", touchTest.touchSensor.getState());
+
+        telemetry.addData("ColorVal", jewelTest.color_sensor.alpha());
+        telemetry.addData("RedVal", jewelTest.color_sensor.red());
+        telemetry.addData("BlueVal", jewelTest.color_sensor.blue());
         telemetry.update();
 
     }
