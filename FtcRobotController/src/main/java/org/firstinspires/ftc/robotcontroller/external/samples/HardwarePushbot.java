@@ -53,23 +53,23 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class HardwarePushbot
 {
     /* Public OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
-    public DcMotor  leftArm     = null;
-    public Servo    leftClaw    = null;
-    public Servo    rightClaw   = null;
-    public DcMotor  cannon  = null;
+    public DcMotor  leftDrive;
+    public DcMotor  rightDrive;
+    public DcMotor  leftArm;
+    public Servo    leftClaw;
+    public Servo    rightClaw;
+    public DcMotor  cannon;
     //public Servo    indexer = null;
     //public TouchSensor touch = null;
     //public OpticalDistanceSensor distance = null;
-    public DcMotor spinner = null;
+    public DcMotor spinner;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
+    HardwareMap hwMap;
     private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
@@ -83,8 +83,8 @@ public class HardwarePushbot
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftDrive  = hwMap.get(DcMotor.class, "left_drive");
-        rightDrive = hwMap.get(DcMotor.class, "right_drive");
+        leftDrive  = hwMap.get(DcMotor.class, "Motor2");
+        rightDrive = hwMap.get(DcMotor.class, "Motor3");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 

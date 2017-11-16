@@ -21,6 +21,8 @@ public class ColorSensorClass {
 
     Servo jewel;
     DcMotor motor3;
+    boolean isBlue;
+    boolean none;
 
     public ColorSensorClass() {
 
@@ -34,25 +36,36 @@ public class ColorSensorClass {
         hwMap = ahwMap;
         color_sensor = hwMap.colorSensor.get("color");
         jewel = hwMap.get(Servo.class, "jewelServo");
-        motor3 = hwMap.get(DcMotor.class, "Motor 3");
-
 
 
 
     }
 
-    public void RedCheck(double ServoPos) {
+    public boolean RedCheck(double ServoPos) {
 
 
-        if (color_sensor.red() > 200) {
+        if (color_sensor.red() - color_sensor.blue() >= 100) {
 
+            isBlue = false;
+            none = false;
             jewel.setPosition(ServoPos);
-            motor3.setPower(10);
+            return isBlue;
+
+
+        } else if (color_sensor.blue() - color_sensor.red() >= 200){
+
+            isBlue = true;
+            none = false;
+            jewel.setPosition(0.5);
+            return isBlue;
 
         } else {
 
+            none = true;
+            isBlue = false;
             jewel.setPosition(0.0);
-            motor3.setPower(0.0);
+            return none;
+
 
         }
 

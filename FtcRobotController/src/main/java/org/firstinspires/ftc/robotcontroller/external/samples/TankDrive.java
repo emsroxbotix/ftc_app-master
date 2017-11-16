@@ -14,61 +14,100 @@ import com.qualcomm.robotcore.util.Range;
 @TeleOp(name="TankDrive", group="A-Team")
 public class TankDrive extends OpMode {
 
-    DcMotor leftDrive;
-    DcMotor rightDrive;
-    DcMotor spin;
-    DcMotor shooter;
+
+    Motors motors = new Motors();
+    double recentMotorStep = 0;
+    double rightMotorStep = 0;
+    double leftMotorStep = 0;
+
+
 
     public void init() {
 
-        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        spin = hardwareMap.get(DcMotor.class, "spinner");
-        shooter = hardwareMap.get(DcMotor.class, "cannon");
+        motors.init(hardwareMap);
+
     }
 
     public void loop() {
 
-        float leftY = gamepad1.left_stick_y;
-        float rightY = gamepad1.right_stick_y;
+        float slider = gamepad1.right_stick_x;
+        float rightTrigger = gamepad1.right_trigger;
+        float leftTrigger = gamepad1.left_trigger;
 
-        float cannon = -gamepad2.right_trigger;
-        boolean spinner = gamepad2.right_bumper;
-        boolean spinnero = gamepad2.left_bumper;
+        motors.slide.setPower(-slider);
+
+        float yValue = gamepad1.left_stick_y;
+        float xValue = gamepad1.left_stick_x;
+
+        float leftPower =  yValue - xValue;
+        float rightPower = yValue + xValue;
+
+        motors.leftDrive.setPower(Range.clip(leftPower, -1.0, 1.0));
+        motors.rightDrive.setPower(Range.clip(rightPower, -1.0, 1.0));
+
+        //motors.glyph1.setPosition(rightTrigger);
+        //motors.glyph2.setPosition(1 - rightTrigger);
+        //motors.glyph1.setPosition(1 - leftTrigger);
+        //motors.glyph2.setPosition(leftTrigger);
+
+        if (motors.glyph1.getPosition() + motors.glyph2.getPosition() == 1) {
+
+            if (rightTrigger > 0) {
+
+                //motors.glyph1.setPosition(rightTrigger);
+                //motors.glyph2.setPosition(1 - rightTrigger);
+
+                motors.glyph1.setPosition(rightMotorStep);
+                motors.glyph2.setPosition(1 - rightMotorStep);
+
+                recentMotorStep=recentMotorStep+0.05;
 
 
-        leftDrive.setPower(leftY);
-        rightDrive.setPower(rightY);
+            } if (leftTrigger > 0) {
 
+                //motors.glyph1.setPosition(1 - leftTrigger);
+                //motors.glyph2.setPosition(leftTrigger);
 
-        if (spinner) {
+                motors.glyph1.setPosition(1 - leftMotorStep);
+                motors.glyph2.setPosition(leftMotorStep);
 
-            spin.setPower(1);
+                recentMotorStep=recentMotorStep-0.05;
 
-        } else if (spinnero) {
-
-            spin.setPower(-1);
+            }
 
         } else {
 
-            spin.setPower(0);
+            motors.glyph1.setPosition(0);
+            motors.glyph2.setPosition(1);
 
         }
+        recentMotorStep = recentMotorStep-1;
 
-        if (cannon < 0) {
+/*
+        if (leftY > 0) {
 
-            shooter.setPower(0.5);
+            if (leftX > 0) {
 
-        } else {
 
-            shooter.setPower(0);
+
+            }
+
+            motors.leftDrive.setPower(-leftY);
+            rightDrive.setPower(leftY);
+
+        } else if (leftY < 0) {
+
+            motors.leftDrive.setPower(-leftY);
+            rightDrive.setPower(leftY);
+
+        } else if (leftY == 0) {
+
+            motors.leftDrive.setPower(leftY);
+            motors.rightDrive.setPower(leftY);
 
         }
+        */
 
-        // hello world! i may or may not be a comment
-        // plz dont kill meh
-        // plzplzplzplzplzplzplzplzplzplz
-        // i didnt do anything wrong D:D:D:D:D:D:D:D:D:D:D:D:D:D:
     }
 }
 

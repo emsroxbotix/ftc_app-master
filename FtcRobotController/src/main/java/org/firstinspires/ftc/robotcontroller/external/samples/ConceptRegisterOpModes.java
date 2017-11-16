@@ -84,6 +84,8 @@ public class ConceptRegisterOpModes
       // manager.register("Auto Drive Line",        PushbotAutoDriveToLine_Linear.class);
       // manager.register("K9 Telop",               K9botTeleopTank_Linear.class);
         manager.register("Tank Drive", TankDrive.class);
+        manager.register("Test", Tests.class);
+        manager.register("Auton1", AutonEncoderDrive.class);
 
       // Sensor Samples
       // manager.register("BNO055 IMU",             SensorBNO055IMU.class);
